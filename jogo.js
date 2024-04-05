@@ -1,3 +1,5 @@
+const questionsPerRound = 10;
+let questionsAnswered = 0;
 
 function shuffleQuestions(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -7,11 +9,16 @@ function shuffleQuestions(array) {
     return array;
 }
 
-// Embaralhar as perguntas antes de iniciar o jogo
 shuffleQuestions(questions);
 
 let currentQuestionIndex = 0;
 let score = 0;
+
+function showResult() {
+    const resultMessage = `Você respondeu ${questionsAnswered} perguntas e acertou ${score}.`;
+    alert(resultMessage);
+    score = 0; // Zerar a pontuação
+}
 
 function displayQuestion() {
     const questionElement = document.getElementById('question');
@@ -35,8 +42,13 @@ function checkAnswer(selectedOption) {
         score++;
         document.getElementById('score').textContent = `Pontuação: ${score}`;
     }
+    
+    if (questionsAnswered < questionsPerRound) {
+        nextQuestion();
+    } else {
+        showResult();
+    }
 
-    nextQuestion();
 }
 
 function nextQuestion() {
